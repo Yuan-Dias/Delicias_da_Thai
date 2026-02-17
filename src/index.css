@@ -1,0 +1,30 @@
+/* Importando Inter (texto padrão) e Dancing Script (Manuscrita para o logo) */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    /* Isso resolve o problema da margem branca no topo (overscroll) */
+    background-color: #A94CD1; /* brand-600 */
+}
+
+body {
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Previne seleção de texto indesejada em apps mobile */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Esconde a barra de rolagem horizontal das abas mas mantém o scroll */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
