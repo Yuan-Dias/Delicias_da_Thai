@@ -25,7 +25,7 @@ export function Login() {
 
             const emailsPermitidos = [
                 'yuanbdias692@gmail.com',
-                'emaildathai@gmail.com' // <-- Substitua pelo real dela depois
+                'thaisoliveiraguimaraes6@gmail.com'
             ];
 
             if (!emailsPermitidos.includes(user.email || '')) {
