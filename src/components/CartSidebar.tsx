@@ -146,7 +146,7 @@ export function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
     };
 
     const finalizarPedido = () => {
-        const telefoneLoja = "5573981943221";
+        const telefoneLoja = "5573981807606";
         const temItemEncomenda = items.some(item => item.categoria === 'encomenda');
 
         if (!dadosCliente.nome.trim()) {
