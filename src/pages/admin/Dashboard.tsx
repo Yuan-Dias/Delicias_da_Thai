@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../services/firebase';
 import {
     Plus, Store, Truck, Pencil, Clock, Save, X, Loader2, Trash2, MapPin,
-    Cookie, Croissant, Cake, Sparkles, Settings, Package
+    Cookie, Croissant, Cake, Sparkles, Settings, Package, LogOut
 } from 'lucide-react';
 import { db } from '../../services/firebase';
 import {
@@ -14,6 +17,7 @@ import { ToastContainer, ProductModal, DeleteModal } from '../../components/Visu
 interface Produto {
     id: string;
     nome: string;
+    descricao?: string;
     preco: number;
     categoria: 'pronta-entrega' | 'encomenda';
     imagem: string;
@@ -24,6 +28,7 @@ interface DiaFuncionamento { id: string; nome: string; aberto: boolean; inicio: 
 interface ToastNotification { id: number; message: string; type: 'success' | 'error'; }
 
 export function Dashboard() {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<'produtos' | 'entregas' | 'config'>('produtos');
     const [toasts, setToasts] = useState<ToastNotification[]>([]);
 
@@ -48,6 +53,7 @@ export function Dashboard() {
     const [salvandoProduto, setSalvandoProduto] = useState(false);
     const [editandoProdutoId, setEditandoProdutoId] = useState<string | null>(null);
     const [novoNome, setNovoNome] = useState('');
+    const [novoDescricao, setNovoDescricao] = useState('');
     const [novoPreco, setNovoPreco] = useState('');
     const [novaCategoria, setNovaCategoria] = useState<'pronta-entrega' | 'encomenda'>('pronta-entrega');
     const [imagemBase64, setImagemBase64] = useState('');
@@ -111,6 +117,15 @@ export function Dashboard() {
 
     // --- AÇÕES ---
 
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate('/admin');
+        } catch (error) {
+            showToast("Erro ao sair", "error");
+        }
+    };
+
     const toggleLoja = async () => {
         const novoStatus = !lojaAberta;
         setLojaAberta(novoStatus);
@@ -156,6 +171,7 @@ export function Dashboard() {
         try {
             const dados = {
                 nome: novoNome,
+                descricao: novoDescricao,
                 preco: parseFloat(novoPreco.replace(',', '.')),
                 categoria: novaCategoria,
                 imagem: imagemBase64 || "https://placehold.co/400x400/ede9fe/8b5cf6?text=Doce",
@@ -214,10 +230,22 @@ export function Dashboard() {
     };
 
     function abrirNovo() {
-        setEditandoProdutoId(null); setNovoNome(''); setNovoPreco(''); setNovaCategoria('pronta-entrega'); setImagemBase64(''); setModalProdutoAberto(true);
+        setEditandoProdutoId(null);
+        setNovoNome('');
+        setNovoDescricao('');
+        setNovoPreco('');
+        setNovaCategoria('pronta-entrega');
+        setImagemBase64('');
+        setModalProdutoAberto(true);
     }
     function abrirEdicao(p: Produto) {
-        setEditandoProdutoId(p.id); setNovoNome(p.nome); setNovoPreco(p.preco.toString()); setNovaCategoria(p.categoria); setImagemBase64(p.imagem); setModalProdutoAberto(true);
+        setEditandoProdutoId(p.id);
+        setNovoNome(p.nome);
+        setNovoDescricao(p.descricao || '');
+        setNovoPreco(p.preco.toString());
+        setNovaCategoria(p.categoria);
+        setImagemBase64(p.imagem);
+        setModalProdutoAberto(true);
     }
     async function confirmarExclusao() {
         if (!confirmDelete?.collection || !confirmDelete?.id) return;
@@ -227,7 +255,6 @@ export function Dashboard() {
         } catch { showToast("Erro ao excluir", "error"); }
         finally { setConfirmDelete(null); }
     }
-
 
     if (loading) return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-brand-50">
@@ -242,6 +269,25 @@ export function Dashboard() {
 
             {/* --- HEADER (USANDO BRAND-600) --- */}
             <header className="relative bg-brand-600 pb-20 pt-8 overflow-hidden rounded-b-[3rem] shadow-2xl shadow-brand-900/20">
+
+                {/* BOTÕES DE AÇÃO RÁPIDA (SAIR / VER LOJA) */}
+                <div className="absolute top-4 left-0 right-0 px-6 flex justify-between z-30">
+                    <button
+                        onClick={() => navigate('/')}
+                        className="p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition-all flex items-center gap-2 px-4 text-xs font-bold border border-white/10"
+                    >
+                        <Store size={16} />
+                        Ver Loja
+                    </button>
+
+                    <button
+                        onClick={handleLogout}
+                        className="p-2 bg-red-500/20 hover:bg-red-500/40 backdrop-blur-md rounded-full text-white transition-all flex items-center gap-2 px-4 text-xs font-bold border border-red-500/20"
+                    >
+                        <LogOut size={16} />
+                        Sair
+                    </button>
+                </div>
 
                 {/* BACKGROUND ICONS - Cores ajustadas para a paleta brand */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -359,6 +405,13 @@ export function Dashboard() {
                                                 {produto.disponivel ? <Package size={10} /> : <Clock size={10} />}
                                             </div>
                                         </div>
+
+                                        {produto.descricao && (
+                                            <p className="text-[11px] text-gray-500 line-clamp-1 mb-1">
+                                                {produto.descricao}
+                                            </p>
+                                        )}
+
                                         <p className="text-brand-600 font-extrabold text-base">R$ {produto.preco.toFixed(2).replace('.', ',')}</p>
 
                                         <p className={`text-[9px] font-bold uppercase ${produto.disponivel ? 'text-emerald-500' : 'text-orange-500'}`}>
@@ -522,7 +575,7 @@ export function Dashboard() {
                 )}
             </main>
 
-            <ProductModal isOpen={modalProdutoAberto} onClose={() => setModalProdutoAberto(false)} onSubmit={handleSalvarProduto} loading={salvandoProduto} isEditing={!!editandoProdutoId} nome={novoNome} setNome={setNovoNome} preco={novoPreco} setPreco={setNovoPreco} categoria={novaCategoria} setCategoria={setNovaCategoria} imagem={imagemBase64} onImageUpload={handleImagemProduto} />
+            <ProductModal isOpen={modalProdutoAberto} onClose={() => setModalProdutoAberto(false)} onSubmit={handleSalvarProduto} loading={salvandoProduto} isEditing={!!editandoProdutoId} nome={novoNome} setNome={setNovoNome} descricao={novoDescricao} setDescricao={setNovoDescricao} preco={novoPreco} setPreco={setNovoPreco} categoria={novaCategoria} setCategoria={setNovaCategoria} imagem={imagemBase64} onImageUpload={handleImagemProduto} />
             <DeleteModal isOpen={!!confirmDelete} onClose={() => setConfirmDelete(null)} onConfirm={confirmarExclusao} />
         </div>
     );

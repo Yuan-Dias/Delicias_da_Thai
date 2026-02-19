@@ -22,12 +22,13 @@ interface ProductModalProps {
     loading: boolean;
     isEditing: boolean;
     nome: string; setNome: (v: string) => void;
+    descricao: string; setDescricao: (val: string) => void;
     preco: string; setPreco: (v: string) => void;
     categoria: string; setCategoria: (v: any) => void;
     imagem: string; onImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export function ProductModal({ isOpen, onClose, onSubmit, loading, isEditing, nome, setNome, preco, setPreco, categoria, setCategoria, imagem, onImageUpload }: ProductModalProps) {
+export function ProductModal({ isOpen, onClose, onSubmit, loading, isEditing, nome, setNome, descricao, setDescricao, preco, setPreco, categoria, setCategoria, imagem, onImageUpload }: ProductModalProps) {
     if (!isOpen) return null;
 
     return (
@@ -54,6 +55,16 @@ export function ProductModal({ isOpen, onClose, onSubmit, loading, isEditing, no
                         <div>
                             <label className="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Nome</label>
                             <input type="text" placeholder="Ex: Bolo de Pote" value={nome} onChange={e => setNome(e.target.value)} className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:border-purple-600 focus:ring-1 focus:ring-purple-600 transition-all font-medium text-gray-800" required />
+                        </div>
+
+                        <div>
+                            <label className="block text-xs font-bold text-gray-400 uppercase mb-1 ml-1">Descrição (Ingredientes/Tamanho)</label>
+                            <textarea
+                                placeholder="Ex: Recheio de ninho com morangos frescos. 250ml."
+                                value={descricao}
+                                onChange={e => setDescricao(e.target.value)}
+                                className="w-full p-4 bg-gray-50 rounded-xl border border-gray-200 outline-none focus:border-purple-600 focus:ring-1 focus:ring-purple-600 transition-all font-medium text-gray-800 resize-none h-24"
+                            />
                         </div>
 
                         <div className="flex gap-4">

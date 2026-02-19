@@ -9,6 +9,7 @@ import { CartSidebar } from '../../components/CartSidebar';
 interface Produto {
     id: string;
     nome: string;
+    descricao?: string;
     preco: number;
     categoria: 'pronta-entrega' | 'encomenda';
     imagem: string;
@@ -262,6 +263,12 @@ export function Home() {
                                         <h3 className="font-bold text-gray-700 text-sm leading-tight mb-1 line-clamp-2 min-h-[2.5em]">
                                             {produto.nome}
                                         </h3>
+
+                                        {produto.descricao && (
+                                            <p className="text-[10px] text-gray-400 leading-snug line-clamp-2 mb-2 italic">
+                                                {produto.descricao}
+                                            </p>
+                                        )}
 
                                         <div className="mt-auto pt-2 flex items-center justify-between">
                                             <span className="text-brand-600 font-extrabold text-lg">

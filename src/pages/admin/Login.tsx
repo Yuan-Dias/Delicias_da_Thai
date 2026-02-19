@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Lock, Loader2, Mail } from 'lucide-react';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../services/firebase';
 
@@ -11,6 +11,15 @@ export function Login() {
     const [carregando, setCarregando] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigate('/admin/dashboard', { replace: true });
+            }
+        });
+        return () => unsubscribe();
+    }, [navigate]);
 
     // --- LOGIN COM GOOGLE ---
     const handleLoginGoogle = async () => {
