@@ -59,6 +59,7 @@ yarn install
 ```
 
 ### 4. Configurando as Variáveis de Ambiente
+```
 
 Crie um arquivo .env na raiz do projeto e adicione as chaves do seu projeto Firebase:
 Snippet de código
@@ -69,6 +70,7 @@ VITE_FIREBASE_PROJECT_ID=seu_project_id_aqui
 VITE_FIREBASE_STORAGE_BUCKET=seu_storage_bucket_aqui
 VITE_FIREBASE_MESSAGING_SENDER_ID=seu_sender_id_aqui
 VITE_FIREBASE_APP_ID=seu_app_id_aqui
+```
 
 ### 5. Rodando a aplicação
 ``` bash
@@ -77,7 +79,7 @@ npm run dev
 # ou
 yarn dev
 
-```
+
 O servidor iniciará localmente. Acesse http://localhost:5173 no seu navegador.
  Estrutura de Pastas (Resumo)
 Plaintext
@@ -91,6 +93,7 @@ src/
  ┣ services/     # Configuração de serviços externos (Firebase)
  ┣ App.tsx       # Configuração das rotas principais e de proteção (Rota Privada)
  ┗ main.tsx      # Ponto de entrada do React
+```
 
  Deploy
 
