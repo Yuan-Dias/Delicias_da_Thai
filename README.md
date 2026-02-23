@@ -45,16 +45,18 @@ Este projeto foi construído com as seguintes tecnologias:
 Certifique-se de ter o [Node.js](https://nodejs.org/) instalado em sua máquina.
 
 ### 2. Clonando o repositório
-´´´ bash
+``` bash
 git clone (https://github.com/Yuan-Dias/delicias-da-thai.git)
 cd delicias-da-thai
+```
 
 ### 3. Instalando as dependências
-´´´ bash
+``` bash
 
 npm install
 # ou
 yarn install
+```
 
 ### 4. Configurando as Variáveis de Ambiente
 
@@ -69,12 +71,13 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=seu_sender_id_aqui
 VITE_FIREBASE_APP_ID=seu_app_id_aqui
 
 ### 5. Rodando a aplicação
-´´´ bash
+``` bash
 
 npm run dev
 # ou
 yarn dev
 
+```
 O servidor iniciará localmente. Acesse http://localhost:5173 no seu navegador.
  Estrutura de Pastas (Resumo)
 Plaintext
