@@ -46,8 +46,8 @@ Certifique-se de ter o [Node.js](https://nodejs.org/) instalado em sua máquina.
 
 ### 2. Clonando o repositório
 ``` bash
-git clone (https://github.com/Yuan-Dias/delicias-da-thai.git)
-cd delicias-da-thai
+git clone (https://github.com/Yuan-Dias/Delicias_da_Thai.git)
+cd Delicias_da_Thai
 ```
 
 ### 3. Instalando as dependências
