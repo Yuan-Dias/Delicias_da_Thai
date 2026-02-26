@@ -162,7 +162,7 @@ export function Home() {
                         </div>
 
                         <div className="text-white">
-                            <span className="block text-xs font-bold tracking-[0.2em] opacity-90 uppercase mb-1">Delícias da</span>
+                            <span className="block text-xs font-bold tracking-[0.2em] opacity-90 uppercase mb-1">La Dolce</span>
                             <h1 className="font-script text-5xl text-brand-50 drop-shadow-md rotate-[-2deg]">
                                 Thai
                             </h1>
