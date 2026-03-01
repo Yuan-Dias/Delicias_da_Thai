@@ -44,6 +44,16 @@ function RotaPrivada({ children }: { children: React.ReactNode }) {
 
 // --- ROTAS DO APP ---
 function App() {
+
+    useEffect(() => {
+        const dominioAntigo = 'deliciasdathai.vercel.app';
+        const dominioNovo = 'https://ladolcethai.vercel.app';
+
+        if (window.location.hostname === dominioAntigo) {
+            window.location.replace(dominioNovo + window.location.pathname);
+        }
+    }, []);
+
     return (
         <BrowserRouter>
             <Routes>
