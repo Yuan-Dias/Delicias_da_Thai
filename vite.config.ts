@@ -9,10 +9,10 @@ export default defineConfig({
             registerType: 'autoUpdate',
             includeAssets: ['favicon.png', 'apple-touch-icon.png', 'masked-icon.svg'],
             manifest: {
-                name: 'Delícias da Thai',
-                short_name: 'Delícias Thai',
+                name: 'La Dolce Thai',
+                short_name: 'La Dolce Thai',
                 description: 'O melhor catálogo de doces e bolos da cidade.',
-                theme_color: '#ffffff',
+                theme_color: '#ec4899',
                 background_color: '#ffffff',
                 display: 'standalone',
                 start_url: '/',
@@ -34,6 +34,12 @@ export default defineConfig({
                         purpose: 'any maskable'
                     }
                 ]
+            },
+
+            workbox: {
+                cleanupOutdatedCaches: true,
+                clientsClaim: true,
+                skipWaiting: true
             }
         })
     ],
