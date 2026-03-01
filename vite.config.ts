@@ -37,6 +37,7 @@ export default defineConfig({
             },
 
             workbox: {
+                cacheId: 'la-dolce-v1',
                 cleanupOutdatedCaches: true,
                 clientsClaim: true,
                 skipWaiting: true
