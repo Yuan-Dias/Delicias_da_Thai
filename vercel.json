@@ -1,4 +1,17 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "deliciasdathai.vercel.app"
+        }
+      ],
+      "destination": "https://ladolcethai.vercel.app",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
